@@ -1,0 +1,16 @@
+<idea-plugin>
+  <id>com.jetbrains.cidr.clsi</id>
+  <name>CLSI</name>
+  <vendor email="daniel.brauner@jetbrains.com">Daniel Brauner</vendor>
+  <description>CLion Scripting Interface (probably works with other IDEs too)</description>
+
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.lang</depends>
+
+  <depends config-file="META-INF/plugin-py.xml" optional="true">PythonCore</depends>
+
+  <actions>
+    <action id="com.jetbrains.cidr.clsi.TestAction" class="com.jetbrains.cidr.clsi.TestAction"
+      text="TestAction"/>
+  </actions>
+</idea-plugin>
