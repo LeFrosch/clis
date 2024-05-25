@@ -1,0 +1,2 @@
+com.jetbrains.cidr.clsi.engine.GraalPythonScriptEngineFactory
+com.jetbrains.cidr.clsi.engine.GraalJsScriptEngineFactory
