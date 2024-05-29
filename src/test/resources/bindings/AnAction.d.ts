@@ -1,81 +1,85 @@
-import * as i0 from 'java.lang';
-import * as i1 from 'com.intellij.openapi.project';
-import * as i2 from 'com.intellij.openapi.util';
-import * as i3 from 'javax.swing';
-import * as i4 from 'java.util.function';
-import * as i5 from 'com.intellij.openapi';
-import * as i6 from 'java.util';
+declare namespace com.intellij.openapi.actionSystem {
+    import {Object} from "./java.lang.Object";
+    import {PossiblyDumbAware} from "./com.intellij.openapi.project.PossiblyDumbAware";
+    import {Key} from "./com.intellij.openapi.util.Key";
+    import {Icon} from "./javax.swing.Icon";
+    import {Supplier} from "./java.util.function.Supplier";
+    import {JComponent} from "./javax.swing.JComponent";
+    import {Disposable} from "./com.intellij.openapi.Disposable";
+    import {List} from "./java.util.List";
+    import {Project} from "./com.intellij.openapi.project.Project";
 
-export abstract class AnAction extends i0.Object implements i1.PossiblyDumbAware, ActionUpdateThreadAware {
-    static readonly EMPTY_ARRAY: AnAction[];
-    static readonly ACTIONS_KEY: i2.Key;
+    export abstract class AnAction extends Object implements PossiblyDumbAware, ActionUpdateThreadAware {
+        static readonly EMPTY_ARRAY: AnAction[];
+        static readonly ACTIONS_KEY: Key;
 
-    constructor();
-    constructor(p0: string,);
-    constructor(p0: string, p1: string, p2: i3.Icon,);
-    constructor(p0: i4.Supplier,);
-    constructor(p0: i4.Supplier, p1: i4.Supplier,);
-    constructor(p0: i4.Supplier, p1: i4.Supplier, p2: i4.Supplier,);
-    constructor(p0: i4.Supplier, p1: i4.Supplier, p2: i3.Icon,);
-    constructor(p0: i4.Supplier, p1: i3.Icon,);
-    constructor(p0: i3.Icon,);
+        constructor();
+        constructor(p0: string,);
+        constructor(p0: string, p1: string, p2: Icon,);
+        constructor(p0: Supplier,);
+        constructor(p0: Supplier, p1: Supplier,);
+        constructor(p0: Supplier, p1: Supplier, p2: Supplier,);
+        constructor(p0: Supplier, p1: Supplier, p2: Icon,);
+        constructor(p0: Supplier, p1: Icon,);
+        constructor(p0: Icon,);
 
-    actionPerformed(p0: AnActionEvent,): void;
+        actionPerformed(p0: AnActionEvent): void;
 
-    displayTextInToolbar(): boolean;
+        displayTextInToolbar(): boolean;
 
-    isDefaultIcon(): boolean;
+        isDefaultIcon(): boolean;
 
-    isDumbAware(): boolean;
+        isDumbAware(): boolean;
 
-    isInInjectedContext(): boolean;
+        isInInjectedContext(): boolean;
 
-    useSmallerFontForTextInToolbar(): boolean;
+        useSmallerFontForTextInToolbar(): boolean;
 
-    getActionUpdateThread(): ActionUpdateThread;
+        getActionUpdateThread(): ActionUpdateThread;
 
-    isEnabledInModalContext(): boolean;
+        isEnabledInModalContext(): boolean;
 
-    getTemplatePresentation(): Presentation;
+        getTemplatePresentation(): Presentation;
 
-    getShortcutSet(): ShortcutSet;
+        getShortcutSet(): ShortcutSet;
 
-    getTemplateText(): string;
+        getTemplateText(): string;
 
-    copyFrom(p0: AnAction,): void;
+        copyFrom(p0: AnAction): void;
 
-    copyShortcutFrom(p0: AnAction,): void;
+        copyShortcutFrom(p0: AnAction): void;
 
-    registerCustomShortcutSet(p0: ShortcutSet, p1: i3.JComponent,): void;
-    registerCustomShortcutSet(p0: ShortcutSet, p1: i3.JComponent, p2: i5.Disposable,): void;
-    registerCustomShortcutSet(p0: number, p1: number, p2: i3.JComponent,): void;
-    registerCustomShortcutSet(p0: i3.JComponent, p1: i5.Disposable,): void;
+        registerCustomShortcutSet(p0: ShortcutSet, p1: JComponent): void;
+        registerCustomShortcutSet(p0: ShortcutSet, p1: JComponent, p2: Disposable): void;
+        registerCustomShortcutSet(p0: number, p1: number, p2: JComponent): void;
+        registerCustomShortcutSet(p0: JComponent, p1: Disposable): void;
 
-    unregisterCustomShortcutSet(p0: i3.JComponent,): void;
+        unregisterCustomShortcutSet(p0: JComponent): void;
 
-    toString(): string;
+        toString(): string;
 
-    getSynonyms(): i6.List;
+        getSynonyms(): List;
 
-    static getEventProject(p0: AnActionEvent,): i1.Project;
+        static getEventProject(p0: AnActionEvent): Project;
 
-    addSynonym(p0: i4.Supplier,): void;
+        addSynonym(p0: Supplier): void;
 
-    addTextOverride(p0: string, p1: string,): void;
-    addTextOverride(p0: string, p1: i4.Supplier,): void;
+        addTextOverride(p0: string, p1: string): void;
+        addTextOverride(p0: string, p1: Supplier): void;
 
-    applyTextOverride(p0: AnActionEvent,): void;
-    applyTextOverride(p0: string, p1: Presentation,): void;
+        applyTextOverride(p0: AnActionEvent): void;
+        applyTextOverride(p0: string, p1: Presentation): void;
 
-    beforeActionPerformedUpdate(p0: AnActionEvent,): void;
+        beforeActionPerformedUpdate(p0: AnActionEvent): void;
 
-    copyActionTextOverride(p0: string, p1: string, p2: string,): void;
+        copyActionTextOverride(p0: string, p1: string, p2: string): void;
 
-    setDefaultIcon(p0: boolean,): void;
+        setDefaultIcon(p0: boolean): void;
 
-    setInjectedContext(p0: boolean,): void;
+        setInjectedContext(p0: boolean): void;
 
-    setShortcutSet(p0: ShortcutSet,): void;
+        setShortcutSet(p0: ShortcutSet): void;
 
-    update(p0: AnActionEvent,): void;
+        update(p0: AnActionEvent): void;
+    }
 }

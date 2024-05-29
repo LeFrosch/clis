@@ -7,10 +7,19 @@
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.lang</depends>
 
-  <depends config-file="plugin-js.xml" optional="true">JavaScript</depends>
+  <depends>JavaScript</depends>
 
-  <actions>
-    <action id="com.jetbrains.cidr.clsi.TestAction" class="com.jetbrains.cidr.clsi.TestAction"
-      text="TestAction"/>
-  </actions>
+  <extensions defaultExtensionNs="com.intellij">
+    <psi.referenceContributor
+            language="JavaScript"
+            implementation="com.jetbrains.cidr.clsi.codeinsight.JSReferenceContributor"/>
+  </extensions>
+
+  <extensions defaultExtensionNs="JavaScript">
+    <frameworkSpecificHandler
+            language="JavaScript"
+            implementationClass="com.jetbrains.cidr.clsi.codeinsight.JSJavaFramework"/>
+    <predefinedLibraryProvider
+            implementation="com.jetbrains.cidr.clsi.bindings.TSLibraryProvider"/>
+  </extensions>
 </idea-plugin>

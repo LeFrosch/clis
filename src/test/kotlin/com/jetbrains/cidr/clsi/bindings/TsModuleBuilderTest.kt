@@ -29,14 +29,12 @@ class TsModuleBuilderTest : BasePlatformTestCase() {
     }
 
     private fun doTest(clazz: Class<*>) {
-        val content = TSModuleBuilder(clazz.packageName).apply {
-            classDefinitionFrom(clazz, sortForTesting = true)
-        }.build()
+        val result = createTsClass(clazz, sortForTesting = true)
 
         val file = PsiFileFactory.getInstance(project).createFileFromText(
             "file.d.ts",
             TypeScriptFileType.INSTANCE,
-            content,
+            result.fileContent,
             LocalTimeCounter.currentTime(),
             false,
             true
@@ -59,4 +57,8 @@ class TsModuleBuilderTest : BasePlatformTestCase() {
     fun `test PsiManager`() = doTest(com.intellij.psi.PsiManager::class.java)
 
     fun `test Keymap`() = doTest(com.intellij.openapi.keymap.Keymap::class.java)
+
+    fun `test KeymapManager`() = doTest(com.intellij.openapi.keymap.KeymapManager::class.java)
+
+    fun `test Object`() = doTest(Object::class.java)
 }

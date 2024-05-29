@@ -46,18 +46,16 @@ tasks {
 }
 
 dependencies {
-    val graalvmVersion = "23.0.4"
+    val graalvmVersion = "24.0.1"
 
-    implementation("org.graalvm.js:js:${graalvmVersion}")
-    runtimeOnly("org.graalvm.compiler:compiler:${graalvmVersion}")
+    implementation("org.graalvm.polyglot:polyglot:$graalvmVersion")
+    implementation("org.graalvm.polyglot:js-community:$graalvmVersion")
+
+    runtimeOnly("org.graalvm.compiler:compiler:$graalvmVersion")
 }
 
 tasks.runIde {
     intellij.plugins.add("IdeaVIM:2.10.2")
 
     jvmArgs = listOf("-Xms4G", "-Xmx4096m", "-XX:+UnlockExperimentalVMOptions", "-XX:+EnableJVMCI", "-ea", "-Didea.ProcessCanceledException=disabled")
-}
-
-tasks.test {
-    jvmArgs = listOf("-Xms4G", "-Xmx4096m", "-XX:+UnlockExperimentalVMOptions", "-XX:+EnableJVMCI", "-ea")
 }

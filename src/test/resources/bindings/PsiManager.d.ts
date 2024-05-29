@@ -1,47 +1,50 @@
-import * as i0 from 'com.intellij.openapi.util';
-import * as i1 from 'java.lang';
-import * as i2 from 'com.intellij.openapi.project';
-import * as i3 from 'com.intellij.openapi.vfs';
-import * as i4 from 'com.intellij.psi.util';
-import * as i5 from 'com.intellij.openapi';
+declare namespace com.intellij.psi {
+    import {UserDataHolderBase} from "./com.intellij.openapi.util.UserDataHolderBase";
+    import {Computable} from "./com.intellij.openapi.util.Computable";
+    import {Object} from "./java.lang.Object";
+    import {Project} from "./com.intellij.openapi.project.Project";
+    import {VirtualFile} from "./com.intellij.openapi.vfs.VirtualFile";
+    import {PsiModificationTracker} from "./com.intellij.psi.util.PsiModificationTracker";
+    import {Disposable} from "./com.intellij.openapi.Disposable";
 
-export abstract class PsiManager extends i0.UserDataHolderBase {
-    constructor();
+    export abstract class PsiManager extends UserDataHolderBase {
+        constructor();
 
-    runInBatchFilesMode(p0: i0.Computable,): i1.Object;
+        runInBatchFilesMode(p0: Computable): Object;
 
-    areElementsEquivalent(p0: PsiElement, p1: PsiElement,): boolean;
+        areElementsEquivalent(p0: PsiElement, p1: PsiElement): boolean;
 
-    isDisposed(): boolean;
+        isDisposed(): boolean;
 
-    isInProject(p0: PsiElement,): boolean;
+        isInProject(p0: PsiElement): boolean;
 
-    getProject(): i2.Project;
+        getProject(): Project;
 
-    findCachedViewProvider(p0: i3.VirtualFile,): FileViewProvider;
+        findCachedViewProvider(p0: VirtualFile): FileViewProvider;
 
-    findViewProvider(p0: i3.VirtualFile,): FileViewProvider;
+        findViewProvider(p0: VirtualFile): FileViewProvider;
 
-    findDirectory(p0: i3.VirtualFile,): PsiDirectory;
+        findDirectory(p0: VirtualFile): PsiDirectory;
 
-    findFile(p0: i3.VirtualFile,): PsiFile;
+        findFile(p0: VirtualFile): PsiFile;
 
-    getModificationTracker(): i4.PsiModificationTracker;
+        getModificationTracker(): PsiModificationTracker;
 
-    addPsiTreeChangeListener(p0: PsiTreeChangeListener,): void;
-    addPsiTreeChangeListener(p0: PsiTreeChangeListener, p1: i5.Disposable,): void;
+        addPsiTreeChangeListener(p0: PsiTreeChangeListener): void;
+        addPsiTreeChangeListener(p0: PsiTreeChangeListener, p1: Disposable): void;
 
-    dropPsiCaches(): void;
+        dropPsiCaches(): void;
 
-    dropResolveCaches(): void;
+        dropResolveCaches(): void;
 
-    finishBatchFilesProcessingMode(): void;
+        finishBatchFilesProcessingMode(): void;
 
-    reloadFromDisk(p0: PsiFile,): void;
+        reloadFromDisk(p0: PsiFile): void;
 
-    removePsiTreeChangeListener(p0: PsiTreeChangeListener,): void;
+        removePsiTreeChangeListener(p0: PsiTreeChangeListener): void;
 
-    startBatchFilesProcessingMode(): void;
+        startBatchFilesProcessingMode(): void;
 
-    static getInstance(p0: i2.Project,): PsiManager;
+        static getInstance(p0: Project): PsiManager;
+    }
 }
