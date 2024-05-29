@@ -3,11 +3,9 @@ package com.jetbrains.cidr.clsi
 import com.intellij.ide.script.IdeScriptEngineManager
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.jetbrains.python.psi.impl.PyImportResolver
 
 class TestAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        val extensions = PyImportResolver.EP_NAME.extensionList
         val b = 3
         val engine = IdeScriptEngineManager.getInstance().getEngineByFileExtension("kts", null)
 
@@ -21,3 +19,10 @@ showInfoMessage("test", "test")
     }
 }
 
+fun testRunnable(r: Runnable) {
+    r.run()
+}
+
+fun testLambda(r: () -> Unit) {
+    r()
+}

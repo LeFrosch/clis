@@ -7,7 +7,7 @@
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.lang</depends>
 
-  <depends config-file="META-INF/plugin-py.xml" optional="true">PythonCore</depends>
+  <depends config-file="plugin-js.xml" optional="true">JavaScript</depends>
 
   <actions>
     <action id="com.jetbrains.cidr.clsi.TestAction" class="com.jetbrains.cidr.clsi.TestAction"

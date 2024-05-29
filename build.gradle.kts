@@ -15,7 +15,7 @@ intellij {
     version.set("2024.1")
     type.set("CL")
 
-    plugins.set(listOf("PythonCore"))
+    plugins.set(listOf("JavaScript"))
 }
 
 tasks {
@@ -46,15 +46,18 @@ tasks {
 }
 
 dependencies {
-    val graalvmVersion = "24.0.1"
+    val graalvmVersion = "23.0.4"
 
-    implementation("org.graalvm.polyglot:polyglot:${graalvmVersion}")
-    implementation("org.graalvm.polyglot:js:${graalvmVersion}")
-    implementation("org.graalvm.polyglot:python:${graalvmVersion}")
-
+    implementation("org.graalvm.js:js:${graalvmVersion}")
     runtimeOnly("org.graalvm.compiler:compiler:${graalvmVersion}")
 }
 
 tasks.runIde {
+    intellij.plugins.add("IdeaVIM:2.10.2")
+
+    jvmArgs = listOf("-Xms4G", "-Xmx4096m", "-XX:+UnlockExperimentalVMOptions", "-XX:+EnableJVMCI", "-ea", "-Didea.ProcessCanceledException=disabled")
+}
+
+tasks.test {
     jvmArgs = listOf("-Xms4G", "-Xmx4096m", "-XX:+UnlockExperimentalVMOptions", "-XX:+EnableJVMCI", "-ea")
 }

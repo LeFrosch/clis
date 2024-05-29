@@ -13,7 +13,6 @@ class GraalScriptEngine(
 
     companion object {
         const val JAVA_SCRIPT_LANGUAGE_ID = "js"
-        const val PYTHON_LANGUAGE_ID = "python"
 
         private const val GRAAL_CONTEXT = "graal.context"
     }
@@ -24,7 +23,7 @@ class GraalScriptEngine(
 
     private fun getOrCreateContext(scriptContext: ScriptContext): Context {
         return scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).computeIfAbsent(GRAAL_CONTEXT) {
-            Context.newBuilder(JAVA_SCRIPT_LANGUAGE_ID, PYTHON_LANGUAGE_ID)
+            Context.newBuilder(JAVA_SCRIPT_LANGUAGE_ID)
                 .allowHostAccess(HostAccess.ALL)
                 .allowHostClassLookup { true }
                 .build()
