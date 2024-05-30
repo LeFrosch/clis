@@ -1,44 +1,47 @@
-declare namespace com.intellij.openapi.keymap {
-    import {Scheme} from "./com.intellij.openapi.options.Scheme";
-    import {MouseShortcut} from "./com.intellij.openapi.actionSystem.MouseShortcut";
-    import {Shortcut} from "./com.intellij.openapi.actionSystem.Shortcut";
-    import {KeyStroke} from "./javax.swing.KeyStroke";
-    import {Collection} from "./java.util.Collection";
-    import {List} from "./java.util.List";
-    import {KeyboardShortcut} from "./com.intellij.openapi.actionSystem.KeyboardShortcut";
-    import {Map} from "./java.util.Map";
+import { Scheme } from "./com.intellij.openapi.options.Scheme";
+import { MouseShortcut } from "./com.intellij.openapi.actionSystem.MouseShortcut";
+import { Shortcut } from "./com.intellij.openapi.actionSystem.Shortcut";
+import { KeyStroke } from "./javax.swing.KeyStroke";
+import { Collection } from "./java.util.Collection";
+import { List } from "./java.util.List";
+import { KeyboardShortcut } from "./com.intellij.openapi.actionSystem.KeyboardShortcut";
+import { Map } from "./java.util.Map";
 
-    export abstract class Keymap implements Scheme {
-        canModify(): boolean;
+export abstract class Keymap implements Scheme{
 
-        hasActionId(p0: string, p1: MouseShortcut): boolean;
+    canModify(): boolean;
 
-        getShortcuts(p0: string): Shortcut[];
+    hasActionId(p0: string, p1: MouseShortcut): boolean;
 
-        deriveKeymap(p0: string): Keymap;
+    getShortcuts(p0: string): Shortcut[];
 
-        getParent(): Keymap;
+    deriveKeymap(p0: string): Keymap;
 
-        getName(): string;
+    getParent(): Keymap;
 
-        getPresentableName(): string;
+    getName(): string;
 
-        getActionIds(): string[];
-        getActionIds(p0: Shortcut): string[];
-        getActionIds(p0: KeyStroke): string[];
-        getActionIds(p0: KeyStroke, p1: KeyStroke): string[];
+    getPresentableName(): string;
 
-        getActionIdList(): Collection;
-        getActionIdList(p0: Shortcut): List;
+    getActionIds(): string[];
 
-        getActionIds(p0: MouseShortcut): List;
+    getActionIds(p0: Shortcut): string[];
 
-        getConflicts(p0: string, p1: KeyboardShortcut): Map;
+    getActionIds(p0: KeyStroke): string[];
 
-        addShortcut(p0: string, p1: Shortcut): void;
+    getActionIds(p0: KeyStroke, p1: KeyStroke): string[];
 
-        removeAllActionShortcuts(p0: string): void;
+    getActionIdList(): Collection;
 
-        removeShortcut(p0: string, p1: Shortcut): void;
-    }
+    getActionIdList(p0: Shortcut): List;
+
+    getActionIds(p0: MouseShortcut): List;
+
+    getConflicts(p0: string, p1: KeyboardShortcut): Map;
+
+    addShortcut(p0: string, p1: Shortcut): void;
+
+    removeAllActionShortcuts(p0: string): void;
+
+    removeShortcut(p0: string, p1: Shortcut): void;
 }

@@ -1,21 +1,24 @@
-declare namespace java.lang {
-    export class Object {
-        constructor();
+import { Class } from "./java.lang.Class";
 
-        equals(p0: Object): boolean;
+export class Object {
 
-        getClass(): Class;
+    constructor();
 
-        notify(): void;
+    equals(p0: Object): boolean;
 
-        notifyAll(): void;
+    getClass(): Class;
 
-        wait(p0: number): void;
-        wait(): void;
-        wait(p0: number, p1: number): void;
+    notify(): void;
 
-        toString(): string;
+    notifyAll(): void;
 
-        hashCode(): number;
-    }
+    wait(p0: number): void;
+
+    wait(): void;
+
+    wait(p0: number, p1: number): void;
+
+    toString(): string;
+
+    hashCode(): number;
 }

@@ -3,10 +3,8 @@ package com.jetbrains.cidr.clsi.bindings
 import com.intellij.lang.javascript.TypeScriptFileType
 import com.intellij.psi.PsiErrorElement
 import com.intellij.psi.PsiFileFactory
-import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import com.intellij.util.LocalTimeCounter
 import com.jetbrains.cidr.clsi.CLSI_TEST_DATA_PATH
 import com.jetbrains.cidr.clsi.getCLSITestName
 import kotlin.io.path.absolutePathString
@@ -14,7 +12,7 @@ import kotlin.io.path.exists
 import kotlin.io.path.pathString
 import kotlin.io.path.writeText
 
-class TsModuleBuilderTest : BasePlatformTestCase() {
+class TSClassBuilderTest : BasePlatformTestCase() {
     private val resourcePath = CLSI_TEST_DATA_PATH.resolve("bindings")
 
     private fun compareWithFixture(actual: String) {
@@ -35,13 +33,7 @@ class TsModuleBuilderTest : BasePlatformTestCase() {
             "file.d.ts",
             TypeScriptFileType.INSTANCE,
             result.fileContent,
-            LocalTimeCounter.currentTime(),
-            false,
-            true
         )
-
-        // format the file before comparing to fixture
-        CodeStyleManager.getInstance(project).reformat(file)
 
         // write and compare to fixture
         compareWithFixture(file.text)

@@ -1,50 +1,55 @@
-declare namespace com.intellij.psi {
-    import {UserDataHolderBase} from "./com.intellij.openapi.util.UserDataHolderBase";
-    import {Computable} from "./com.intellij.openapi.util.Computable";
-    import {Object} from "./java.lang.Object";
-    import {Project} from "./com.intellij.openapi.project.Project";
-    import {VirtualFile} from "./com.intellij.openapi.vfs.VirtualFile";
-    import {PsiModificationTracker} from "./com.intellij.psi.util.PsiModificationTracker";
-    import {Disposable} from "./com.intellij.openapi.Disposable";
+import { UserDataHolderBase } from "./com.intellij.openapi.util.UserDataHolderBase";
+import { Computable } from "./com.intellij.openapi.util.Computable";
+import { Object } from "./java.lang.Object";
+import { PsiElement } from "./com.intellij.psi.PsiElement";
+import { Project } from "./com.intellij.openapi.project.Project";
+import { VirtualFile } from "./com.intellij.openapi.vfs.VirtualFile";
+import { FileViewProvider } from "./com.intellij.psi.FileViewProvider";
+import { PsiDirectory } from "./com.intellij.psi.PsiDirectory";
+import { PsiFile } from "./com.intellij.psi.PsiFile";
+import { PsiModificationTracker } from "./com.intellij.psi.util.PsiModificationTracker";
+import { PsiTreeChangeListener } from "./com.intellij.psi.PsiTreeChangeListener";
+import { Disposable } from "./com.intellij.openapi.Disposable";
 
-    export abstract class PsiManager extends UserDataHolderBase {
-        constructor();
+export abstract class PsiManager extends UserDataHolderBase {
 
-        runInBatchFilesMode(p0: Computable): Object;
+    constructor();
 
-        areElementsEquivalent(p0: PsiElement, p1: PsiElement): boolean;
+    runInBatchFilesMode(p0: Computable): Object;
 
-        isDisposed(): boolean;
+    areElementsEquivalent(p0: PsiElement, p1: PsiElement): boolean;
 
-        isInProject(p0: PsiElement): boolean;
+    isDisposed(): boolean;
 
-        getProject(): Project;
+    isInProject(p0: PsiElement): boolean;
 
-        findCachedViewProvider(p0: VirtualFile): FileViewProvider;
+    getProject(): Project;
 
-        findViewProvider(p0: VirtualFile): FileViewProvider;
+    findCachedViewProvider(p0: VirtualFile): FileViewProvider;
 
-        findDirectory(p0: VirtualFile): PsiDirectory;
+    findViewProvider(p0: VirtualFile): FileViewProvider;
 
-        findFile(p0: VirtualFile): PsiFile;
+    findDirectory(p0: VirtualFile): PsiDirectory;
 
-        getModificationTracker(): PsiModificationTracker;
+    findFile(p0: VirtualFile): PsiFile;
 
-        addPsiTreeChangeListener(p0: PsiTreeChangeListener): void;
-        addPsiTreeChangeListener(p0: PsiTreeChangeListener, p1: Disposable): void;
+    getModificationTracker(): PsiModificationTracker;
 
-        dropPsiCaches(): void;
+    addPsiTreeChangeListener(p0: PsiTreeChangeListener): void;
 
-        dropResolveCaches(): void;
+    addPsiTreeChangeListener(p0: PsiTreeChangeListener, p1: Disposable): void;
 
-        finishBatchFilesProcessingMode(): void;
+    dropPsiCaches(): void;
 
-        reloadFromDisk(p0: PsiFile): void;
+    dropResolveCaches(): void;
 
-        removePsiTreeChangeListener(p0: PsiTreeChangeListener): void;
+    finishBatchFilesProcessingMode(): void;
 
-        startBatchFilesProcessingMode(): void;
+    reloadFromDisk(p0: PsiFile): void;
 
-        static getInstance(p0: Project): PsiManager;
-    }
+    removePsiTreeChangeListener(p0: PsiTreeChangeListener): void;
+
+    startBatchFilesProcessingMode(): void;
+
+    static getInstance(p0: Project): PsiManager;
 }

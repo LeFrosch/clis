@@ -1,17 +1,16 @@
-declare namespace java.util.function {
-    import {Object} from "./java.lang.Object";
+import { Object } from "./java.lang.Object";
 
-    export abstract class Predicate {
-        test(p0: Object): boolean;
+export abstract class Predicate {
 
-        and(p0: Predicate): Predicate;
+    test(p0: Object): boolean;
 
-        negate(): Predicate;
+    and(p0: Predicate): Predicate;
 
-        or(p0: Predicate): Predicate;
+    negate(): Predicate;
 
-        static isEqual(p0: Object): Predicate;
+    or(p0: Predicate): Predicate;
 
-        static not(p0: Predicate): Predicate;
-    }
+    static isEqual(p0: Object): Predicate;
+
+    static not(p0: Predicate): Predicate;
 }

@@ -46,23 +46,33 @@ private class TSClassBuilder(private val className: String, private val packageN
         return jvmType.simpleName
     }
 
+    private fun StringBuilder.statement(block: StringBuilder.() -> Unit) {
+        append("\n    ")
+        block(this)
+        append(";\n")
+    }
+
+    private fun StringBuilder.appendParameters(paramTypes: List<String>) {
+        append(paramTypes.mapIndexed { i, type -> "p$i: $type" }.joinToString(separator = ", "))
+    }
+
     fun StringBuilder.method(
         name: String,
         paramTypes: List<String> = emptyList(),
         returnType: String = "void",
         static: Boolean = false,
-    ) {
+    ) = statement {
         if (static) append("static ")
 
         append("$name(")
-        append(paramTypes.mapIndexed { i, type -> "p$i:$type" }.joinToString(separator = ","))
-        append("):$returnType;")
+        appendParameters(paramTypes)
+        append("): $returnType")
     }
 
-    fun StringBuilder.constructor(paramTypes: List<String> = emptyList()) {
+    fun StringBuilder.constructor(paramTypes: List<String> = emptyList()) = statement {
         append("constructor(")
-        paramTypes.forEachIndexed { i, it -> append("p$i:$it,") }
-        append(");")
+        appendParameters(paramTypes)
+        append(")")
     }
 
     fun StringBuilder.field(
@@ -70,11 +80,11 @@ private class TSClassBuilder(private val className: String, private val packageN
         type: String,
         final: Boolean = false,
         static: Boolean = false,
-    ) {
+    ) = statement {
         if (static) append("static ")
         if (final) append("readonly ")
 
-        append("$name:$type;")
+        append("$name: $type")
     }
 
     fun body(build: StringBuilder.() -> Unit) {
@@ -90,18 +100,19 @@ private class TSClassBuilder(private val className: String, private val packageN
 
             if (implements.isNotEmpty()) {
                 append("implements ")
-                append(implements.joinToString(","))
+                append(implements.joinToString(", "))
             }
 
-            append("{")
+            append("{\n")
             build(this)
             append("}")
         }
 
         for (import in imports) {
-            builder.append("import { ${import.simpleName} } from \"./${import.canonicalName}\";")
+            builder.append("import { ${import.simpleName} } from \"./${import.canonicalName}\";\n")
         }
 
+        builder.append("\n")
         builder.append(classBuilder)
     }
 }
