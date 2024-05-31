@@ -1,15 +1,16 @@
 package com.jetbrains.cidr.clsi.bindings
 
-import com.intellij.ide.plugins.PluginManagerCore
+import com.google.common.reflect.ClassPath
 
 object ClassUtil {
-    private fun allClassloaders(): Sequence<ClassLoader> = sequence {
+    fun allClassloaders(): Sequence<ClassLoader> = sequence {
         yield(ClassLoader.getSystemClassLoader())
         yield(ClassLoader.getPlatformClassLoader())
+    }
 
-        @Suppress("UnstableApiUsage")
-        for (plugin in PluginManagerCore.getPluginSet().enabledPlugins) {
-            yield(plugin.classLoader)
+    fun classesInPackage(packageName: String): Sequence<String> = sequence {
+        for (loader in allClassloaders()) {
+            yieldAll(ClassPath.from(loader).getTopLevelClasses(packageName).map { it.simpleName })
         }
     }
 
