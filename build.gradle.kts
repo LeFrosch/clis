@@ -50,12 +50,10 @@ dependencies {
 
     implementation("org.graalvm.polyglot:polyglot:$graalvmVersion")
     implementation("org.graalvm.polyglot:js-community:$graalvmVersion")
-
-    runtimeOnly("org.graalvm.compiler:compiler:$graalvmVersion")
 }
 
 tasks.runIde {
     intellij.plugins.add("IdeaVIM:2.10.2")
 
-    jvmArgs = listOf("-Xms4G", "-Xmx4096m", "-XX:+UnlockExperimentalVMOptions", "-XX:+EnableJVMCI", "-ea", "-Didea.ProcessCanceledException=disabled")
+    jvmArgs = listOf("-Xms4G", "-Xmx4096m", "-ea", "--engine.WarnInterpreterOnly=false")
 }

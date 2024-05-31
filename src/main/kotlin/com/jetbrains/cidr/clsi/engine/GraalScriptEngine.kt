@@ -26,6 +26,7 @@ class GraalScriptEngine(
             Context.newBuilder(JAVA_SCRIPT_LANGUAGE_ID)
                 .allowHostAccess(HostAccess.ALL)
                 .allowHostClassLookup { true }
+                .hostClassLoader(this::class.java.classLoader)
                 .build()
         } as Context
     }
