@@ -54,7 +54,7 @@ private object JavaLiteralCompletionProvider : CompletionProvider<CompletionPara
     private val packageTree: PackageTree by lazy {
         val root = PackageTree()
 
-        for (loader in ClassUtil.allClassloaders()) {
+        for (loader in ClassUtil.allClassLoaders) {
             for (pkg in loader.definedPackages) {
                 root.insert(pkg.name.split('.'))
             }

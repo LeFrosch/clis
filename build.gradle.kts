@@ -57,3 +57,7 @@ tasks.runIde {
 
     jvmArgs = listOf("-Xms4G", "-Xmx4096m", "-ea", "--engine.WarnInterpreterOnly=false")
 }
+
+tasks.test {
+    jvmArgs = listOf("-ea", "--engine.WarnInterpreterOnly=false")
+}

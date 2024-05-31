@@ -1,26 +1,41 @@
 package com.jetbrains.cidr.clsi.bindings
 
-import com.google.common.reflect.ClassPath
+import com.intellij.ide.plugins.PluginManagerCore
+import com.intellij.openapi.extensions.PluginId
+import io.github.classgraph.ClassGraph
 
 object ClassUtil {
-    fun allClassloaders(): Sequence<ClassLoader> = sequence {
-        yield(ClassLoader.getSystemClassLoader())
-        yield(ClassLoader.getPlatformClassLoader())
-    }
+    private val PLUGIN_ID: PluginId = PluginId.getId("com.jetbrains.cidr.clsi")
 
-    fun classesInPackage(packageName: String): Sequence<String> = sequence {
-        for (loader in allClassloaders()) {
-            yieldAll(ClassPath.from(loader).getTopLevelClasses(packageName).map { it.simpleName })
+    val allClassLoaders: List<ClassLoader> by lazy {
+        buildList {
+            add(ClassLoader.getSystemClassLoader())
+            add(ClassLoader.getPlatformClassLoader())
+
+            @Suppress("UnstableApiUsage")
+            val pluginClassLoader = PluginManagerCore.getPlugin(PLUGIN_ID)?.classLoader
+            if (pluginClassLoader != null) add(pluginClassLoader)
         }
     }
 
+    fun classesInPackage(packageName: String): List<String> {
+        // TODO: this is expensive, worth caching? Or something less expensive?
+        val result = ClassGraph()
+            .overrideClassLoaders(*allClassLoaders.toTypedArray())
+            .acceptPackagesNonRecursive(packageName)
+            .enableClassInfo()
+            .scan()
+
+        return result.allClasses
+            .filter { info -> info.isPublic && !info.isAnonymousInnerClass }
+            .map { classInfo -> classInfo.simpleName }
+    }
+
     fun loadClass(classPath: String): Class<*>? {
-        return allClassloaders().firstNotNullOfOrNull { loader ->
-            try {
-                loader.loadClass(classPath)
-            } catch (e: ClassNotFoundException) {
-                null
-            }
+        return try {
+            this::class.java.classLoader.loadClass(classPath)
+        } catch (e: ClassNotFoundException) {
+            null
         }
     }
 }
