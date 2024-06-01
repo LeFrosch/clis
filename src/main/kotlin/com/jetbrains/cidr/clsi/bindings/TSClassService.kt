@@ -9,20 +9,17 @@ import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.intellij.psi.PsiManager
 import com.intellij.util.asSafely
 import com.intellij.util.concurrency.ThreadingAssertions
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.launch
+import com.jetbrains.cidr.clsi.ClsiBundle
+import kotlinx.coroutines.*
 import org.jetbrains.annotations.VisibleForTesting
 import java.io.IOException
 import java.nio.file.Path
 import java.util.*
-import kotlin.io.path.createDirectory
-import kotlin.io.path.exists
-import kotlin.io.path.writeText
+import kotlin.io.path.*
 import kotlin.system.measureTimeMillis
 
 private const val TS_LIBRARY_DIR = "clsi_ts_lib"
@@ -39,6 +36,7 @@ private fun virtualFileFor(path: Path): VirtualFile {
 }
 
 @VisibleForTesting
+@Throws(IOException::class)
 fun createBindingsFor(clazz: Class<*>, path: Path) {
     ThreadingAssertions.assertNoReadAccess()
     ThreadingAssertions.assertBackgroundThread()
@@ -66,8 +64,22 @@ fun createBindingsFor(clazz: Class<*>, path: Path) {
     virtualFileFor(path).refresh(false, false)
 }
 
+@VisibleForTesting
+@Throws(IOException::class)
+fun clearBindingsCache(path: Path) {
+    ThreadingAssertions.assertNoReadAccess()
+    ThreadingAssertions.assertBackgroundThread()
+
+    try {
+        @OptIn(ExperimentalPathApi::class)
+        path.forEachDirectoryEntry { it.deleteRecursively() }
+    } finally {
+        virtualFileFor(path).refresh(false, false)
+    }
+}
+
 @Service(Service.Level.APP)
-class TSClassService(coroutineScope: CoroutineScope) {
+class TSClassService(private val coroutineScope: CoroutineScope) {
     private val logger: Logger = thisLogger()
     private val cachePath: Path by lazy { PathManager.getSystemDir().resolve(TS_LIBRARY_DIR) }
 
@@ -112,5 +124,19 @@ class TSClassService(coroutineScope: CoroutineScope) {
         val result = JSStubBasedPsiTreeUtil.resolveLocally(clazz.simpleName, psiFile) ?: return null
 
         return result.asSafely<TypeScriptClass>()
+    }
+
+    fun clearCache(project: Project) {
+        coroutineScope.launch {
+            withBackgroundProgress(project, ClsiBundle.message("action.clsi_ts_clear_cache_action.progress_title")) {
+                withContext(Dispatchers.IO) {
+                    try {
+                        clearBindingsCache(cachePath)
+                    } catch (e: IOException) {
+                        logger.error("bindings: clear cache", e)
+                    }
+                }
+            }
+        }
     }
 }

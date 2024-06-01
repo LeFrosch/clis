@@ -9,6 +9,8 @@
 
   <depends>JavaScript</depends>
 
+  <resource-bundle>messages.clsi</resource-bundle>
+
   <extensions defaultExtensionNs="com.intellij">
     <psi.referenceContributor
             language="JavaScript"
@@ -25,4 +27,9 @@
     <predefinedLibraryProvider
             implementation="com.jetbrains.cidr.clsi.bindings.TSLibraryProvider"/>
   </extensions>
+
+  <actions>
+    <action id="clsi_ts_clear_cache_action"
+            class="com.jetbrains.cidr.clsi.actions.TSClearClassCacheAction"/>
+  </actions>
 </idea-plugin>

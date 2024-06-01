@@ -7,11 +7,8 @@ import com.intellij.psi.PsiErrorElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.utils.io.createDirectory
-import com.intellij.util.io.delete
 import java.nio.file.Path
-import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.exists
-import kotlin.io.path.walk
 
 class TSClassServiceTest : BasePlatformTestCase() {
     private val tempDir = Path.of(PathManager.getTempPath(), "class_service_test")
@@ -23,10 +20,7 @@ class TSClassServiceTest : BasePlatformTestCase() {
 
         if (!tempDir.exists()) tempDir.createDirectory()
 
-        @OptIn(ExperimentalPathApi::class)
-        for (file in tempDir.walk()) {
-            file.delete(recursively = true)
-        }
+        clearBindingsCache(tempDir)
     }
 
     private fun doTest(clazz: Class<*>) {
